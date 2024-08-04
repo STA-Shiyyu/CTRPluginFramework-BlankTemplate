@@ -7,7 +7,7 @@
     },
     "configurations": [
         {
-            "name": "Shiyyu-ACNL-Plugin",
+            "name": "CTRPluginFramework-BlankTemplate",
             "includePath": [
                 "${workspaceFolder}/Includes/**",
                 "${ctrulib}/include/**",
