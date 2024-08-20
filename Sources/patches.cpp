@@ -4,7 +4,7 @@
 namespace CTRPluginFramework
 {
     // This patch the NFC disabling the touchscreen when scanning an amiibo, which prevents ctrpf to be used
-    static void    ToggleTouchscreenForceOn(void)
+    static void ToggleTouchscreenForceOn(void)
     {
         static u32 original = 0;
         static u32 *patchAddress = nullptr;
@@ -20,7 +20,6 @@ namespace CTRPluginFramework
             0xE1D400D4, 0xE3510003, 0x159F0034, 0x1A000003
         };
 
-        Result res;
         Handle processHandle;
         s64 textTotalSize = 0;
         s64 startAddress = 0;
@@ -35,7 +34,7 @@ namespace CTRPluginFramework
             goto exit;
 
         found = (u32 *)Utils::Search<u32>(0x14000000, (u32)textTotalSize, pattern);
-        if (found != nullptr) {
+        if (found) {
             original = found[13];
             patchAddress = (u32 *)PA_FROM_VA((found + 13));
             found[13] = 0xE1A00000;
@@ -48,14 +47,14 @@ namespace CTRPluginFramework
 
     // This function is called before main and before the game starts
     // Useful to do code edits safely
-    void    PatchProcess(FwkSettings &settings)
+    void PatchProcess(FwkSettings &settings)
     {
         ToggleTouchscreenForceOn();
     }
 
     // This function is called when the process exits
     // Useful to save settings, undo patchs or clean up things
-    void    OnProcessExit(void)
+    void OnProcessExit(void)
     {
         ToggleTouchscreenForceOn();
     }
